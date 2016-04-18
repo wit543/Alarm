@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Alarm</string>
+    <string name="append_5_min">+ 5 min</string>
+    <string name="waked">waked</string>
+    <string name="wakeup">WAKEUP</string>
+    <string name="add">ADD</string>
+</resources>
