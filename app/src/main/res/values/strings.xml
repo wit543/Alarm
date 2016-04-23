@@ -4,4 +4,8 @@
     <string name="waked">waked</string>
     <string name="wakeup">WAKEUP</string>
     <string name="add">ADD</string>
+    <string name="title_activity_main24">MainActivity24</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
