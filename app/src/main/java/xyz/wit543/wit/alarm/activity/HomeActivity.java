@@ -29,15 +29,6 @@ import xyz.wit543.wit.alarm.model.Storage;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private List<Alarm> alarms;
-    private RecyclerView.Adapter recycleViewAdapter;
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-    private FloatingActionButton addAlarmButton;
-    private FloatingActionButton deleteAlarmButton;
-    private List<PendingIntent> pendingIntents;
-    private Storage storage = Storage.getInstance();
-
     private Toolbar toolbar;
     private TabLayout tableLayout;
     private ViewPager viewPager;
@@ -51,22 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void init() {
-        alarms = new ArrayList<Alarm>();
-        pendingIntents = new ArrayList<>();
-//        initRecyclerView();
         initTab();
-        initAddAlarmButton();
-        initDeleteAlarmButton();
-    }
-
-    private void initRecyclerView() {
-        recyclerView =(RecyclerView) findViewById(R.id.alarm_recycler_view);
-        assert recyclerView != null;
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recycleViewAdapter = new AlarmRecycleVew(alarms);
-        recyclerView.setAdapter(recycleViewAdapter);
     }
 
     private void initTab(){
@@ -81,80 +57,11 @@ public class HomeActivity extends AppCompatActivity {
         tableLayout = (TabLayout) findViewById(R.id.tabs);
         tableLayout.setupWithViewPager(viewPager);
     }
-    private void initAddAlarmButton(){
-        addAlarmButton = (FloatingActionButton) findViewById(R.id.alarm_add);
-        assert addAlarmButton!=null;
-        addAlarmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createAlarm();
-                statusFragment.update();
-            }
-        });
-    }
-    private void createAlarm(){
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        TimePickerDialog tpd = new TimePickerDialog(HomeActivity.this, R.style.red_dialog, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                addAlarmToPending(hourOfDay,minute);
-            }
 
-        }, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE), true);
-        tpd.show();
-    }
-    private void initDeleteAlarmButton(){
-        deleteAlarmButton = (FloatingActionButton) findViewById(R.id.alarm_delete);
-        deleteAlarmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteAlarm();
-            }
-        });
-    }
-    private void deleteAlarm(){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        for(PendingIntent p:pendingIntents){
-            alarmManager.cancel(p);
-        }
-    }
-    private void addAlarmToPending(int hour, int minute){
-        Alarm alarm = new Alarm(hour,minute);
-        alarms.add(alarm);
-        storage.addAlarm(alarm);
-        recycleViewAdapter.notifyDataSetChanged();
-        Intent intent = new Intent(HomeActivity.this,WakeActivity.class);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.putExtra("alarm",alarm.hashCode());
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(HomeActivity.this,((int)System.currentTimeMillis()),intent,0);
-
-        pendingIntents.add(pendingIntent);
-        storage.addPendingIntent(pendingIntent);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP,alarm.getTime(),   pendingIntent);
-    }
-    private void loadAlarms(){
-        alarms.clear();
-            Iterator<Alarm> alarmIterator = storage.getAlarms();
-        while (alarmIterator.hasNext())
-            alarms.add(alarmIterator.next());
-//        recycleViewAdapter.notifyDataSetChanged();
-    }
-    private void loadPendingIntents(){
-        pendingIntents.clear();
-        Iterator<PendingIntent> pendingIntentIterator =storage.getPendingIntents();
-        while (pendingIntentIterator.hasNext())
-            pendingIntents.add(pendingIntentIterator.next());
-    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        loadAlarms();
-        loadPendingIntents();
     }
 
     public void setupViewPager(ViewPager upViewPager) {
