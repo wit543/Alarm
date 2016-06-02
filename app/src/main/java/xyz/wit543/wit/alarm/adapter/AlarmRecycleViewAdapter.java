@@ -15,7 +15,7 @@ import xyz.wit543.wit.alarm.model.Alarm;
 /**
  * Created by WIT on 19-Apr-16.
  */
-public class AlarmRecycleVew extends RecyclerView.Adapter<AlarmRecycleVew.AlarmViewHolder>{
+public class AlarmRecycleViewAdapter extends RecyclerView.Adapter<AlarmRecycleViewAdapter.AlarmViewHolder>{
     public static class AlarmViewHolder extends RecyclerView.ViewHolder{
         private TextView statusTextView;
         private ImageView statusImageView;
@@ -26,7 +26,7 @@ public class AlarmRecycleVew extends RecyclerView.Adapter<AlarmRecycleVew.AlarmV
         }
     }
     private List<Alarm> statuses;
-    public AlarmRecycleVew(List<Alarm> statuses){
+    public AlarmRecycleViewAdapter(List<Alarm> statuses){
         this.statuses=statuses;
     }
 

@@ -5,17 +5,19 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
@@ -24,8 +26,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import xyz.wit543.wit.alarm.R;
+import xyz.wit543.wit.alarm.activity.SelectFriendActivity;
 import xyz.wit543.wit.alarm.activity.WakeActivity;
-import xyz.wit543.wit.alarm.adapter.AlarmRecycleVew;
+import xyz.wit543.wit.alarm.adapter.AlarmRecycleViewAdapter;
+import xyz.wit543.wit.alarm.dialog.AddFriendDialog;
 import xyz.wit543.wit.alarm.model.Alarm;
 import xyz.wit543.wit.alarm.model.Storage;
 
@@ -37,6 +41,7 @@ public class StatusFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private FloatingActionButton addAlarmButton;
     private FloatingActionButton deleteAlarmButton;
+    private FloatingActionButton addFriendButton;
     private List<PendingIntent> pendingIntents;
     private Storage storage = Storage.getInstance();
     private View v;
@@ -66,6 +71,7 @@ public class StatusFragment extends Fragment {
         pendingIntents = new ArrayList<>();
         initAddAlarmButton();
         initDeleteAlarmButton();
+        initAddFriendButton();
         initRecyclerView();
 
     }
@@ -77,13 +83,29 @@ public class StatusFragment extends Fragment {
         loadPendingIntents();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadAlarms();
+        loadPendingIntents();
+    }
+    private void initAddFriendButton(){
+        addAlarmButton = (FloatingActionButton) v.findViewById(R.id.friend_add);
+        addAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddFriendDialog addFriendDialog = AddFriendDialog.newInstance();
+                addFriendDialog.show(getActivity().getSupportFragmentManager(),"hellp");
+            }
+        });
+    }
     private void initRecyclerView() {
         recyclerView =(RecyclerView) v.findViewById(R.id.alarm_recycler_view);
         assert recyclerView != null;
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(v.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recycleViewAdapter = new AlarmRecycleVew(alarms);
+        recycleViewAdapter = new AlarmRecycleViewAdapter(alarms);
         recyclerView.setAdapter(recycleViewAdapter);
     }
     private void initAddAlarmButton(){
@@ -92,7 +114,12 @@ public class StatusFragment extends Fragment {
         addAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAlarm();
+//                createAlarm();
+                LayoutInflater lif = LayoutInflater.from(getContext());
+                PopupWindow window = new PopupWindow(lif.inflate(R.layout.fragment_select_friend,null),100,100,true);
+                window.showAsDropDown(StatusFragment.this.v);
+                Intent intent = new Intent(getActivity(), SelectFriendActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -123,6 +150,10 @@ public class StatusFragment extends Fragment {
         for(PendingIntent p:pendingIntents){
             alarmManager.cancel(p);
         }
+        alarms.clear();
+        storage.removeAllAlarm();
+        storage.removeAllPendingIntent();
+        recycleViewAdapter.notifyDataSetChanged();
     }
     private void addAlarmToPending(int hour, int minute){
         Alarm alarm = new Alarm(hour,minute);
@@ -154,9 +185,5 @@ public class StatusFragment extends Fragment {
         while (pendingIntentIterator.hasNext())
             pendingIntents.add(pendingIntentIterator.next());
     }
-    public void update(){
-        loadAlarms();
-        loadPendingIntents();
-        Log.v("test","in");
-    }
+
 }

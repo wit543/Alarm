@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.WakeActivity" />
+        <activity android:name=".activity.SelectFriendActivity"></activity>
     </application>
 
 </manifest>
