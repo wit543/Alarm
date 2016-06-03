@@ -2,6 +2,7 @@ package xyz.wit543.wit.alarm.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -10,7 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import xyz.wit543.wit.alarm.R;
+import xyz.wit543.wit.alarm.adapter.AlarmRecycleViewAdapter;
 import xyz.wit543.wit.alarm.adapter.SelectFriendRecycleViewAdapter;
+import xyz.wit543.wit.alarm.model.Alarm;
 import xyz.wit543.wit.alarm.model.Storage;
 import xyz.wit543.wit.alarm.model.User;
 
@@ -31,8 +34,20 @@ public class SelectFriendActivity extends AppCompatActivity {
     }
 
     private void initRecycleView() {
-        recyclerView = (RecyclerView) findViewById(R.id.friend_list);
+        recyclerView = (RecyclerView) findViewById(R.id.friends_recycle_view);
+        assert recyclerView != null;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Log.v("testa",recyclerView+"");
         selectFriendRecycleViewAdapter = new SelectFriendRecycleViewAdapter(friends);
+        List<Alarm> alarms = new ArrayList<>();
+        Iterator<Alarm> ite = Storage.getInstance().getAlarms();
+
+        while (ite.hasNext()){
+            alarms.add(ite.next());
+        }
+        alarms.add(new Alarm(10,10));
+        Log.v("test",alarms.size()+"");
         recyclerView.setAdapter(selectFriendRecycleViewAdapter);
     }
     private void reloadFriend(){

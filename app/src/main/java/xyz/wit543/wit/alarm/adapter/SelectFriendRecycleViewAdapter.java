@@ -24,10 +24,10 @@ public class SelectFriendRecycleViewAdapter extends RecyclerView.Adapter<SelectF
         }
     }
 
-    private List<User> fruends;
+    private List<User> friends;
 
     public SelectFriendRecycleViewAdapter(List<User> friends) {
-        this.fruends = friends;
+        this.friends = friends;
     }
 
     @Override
@@ -40,12 +40,12 @@ public class SelectFriendRecycleViewAdapter extends RecyclerView.Adapter<SelectF
 
     @Override
     public void onBindViewHolder(SelectFriendViewHolder holder, int position) {
-        Log.v("test",fruends.get(position).getUserName()+" "+position);
-        holder.name.setText(fruends.get(position).getUserName());
+        Log.v("test", friends.get(position).getUserName()+" "+position);
+        holder.name.setText(friends.get(position).getUserName());
     }
 
     @Override
     public int getItemCount() {
-        return fruends.size();
+        return friends.size();
     }
 }

@@ -4,17 +4,28 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import xyz.wit543.wit.alarm.R;
+import xyz.wit543.wit.alarm.adapter.SelectFriendRecycleViewAdapter;
+import xyz.wit543.wit.alarm.model.Storage;
+import xyz.wit543.wit.alarm.model.User;
 
 
 public class SelectFriendFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-
+    private List<User> friends;
+    private RecyclerView friendRecyclerView;
+    private SelectFriendRecycleViewAdapter selectFriendRecycleViewAdapter;
     public SelectFriendFragment() {
         // Required empty public constructor
     }
@@ -54,8 +65,19 @@ public class SelectFriendFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        friends = new ArrayList<User>();
+        loadFriend();
+        friendRecyclerView = (RecyclerView) getActivity().findViewById(R.id.friend_recycle_view);
+        selectFriendRecycleViewAdapter = new SelectFriendRecycleViewAdapter(friends);
     }
 
+    private void loadFriend(){
+        friends.clear();
+        Iterator<User> ite = Storage.getInstance().getFriends();
+        while (ite.hasNext()){
+            friends.add(ite.next());
+        }
+    }
     @Override
     public void onDetach() {
         super.onDetach();

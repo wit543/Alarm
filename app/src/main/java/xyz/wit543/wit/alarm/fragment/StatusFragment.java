@@ -29,9 +29,11 @@ import xyz.wit543.wit.alarm.R;
 import xyz.wit543.wit.alarm.activity.SelectFriendActivity;
 import xyz.wit543.wit.alarm.activity.WakeActivity;
 import xyz.wit543.wit.alarm.adapter.AlarmRecycleViewAdapter;
+import xyz.wit543.wit.alarm.adapter.SelectFriendRecycleViewAdapter;
 import xyz.wit543.wit.alarm.dialog.AddFriendDialog;
 import xyz.wit543.wit.alarm.model.Alarm;
 import xyz.wit543.wit.alarm.model.Storage;
+import xyz.wit543.wit.alarm.model.User;
 
 
 public class StatusFragment extends Fragment {
@@ -99,6 +101,7 @@ public class StatusFragment extends Fragment {
             }
         });
     }
+
     private void initRecyclerView() {
         recyclerView =(RecyclerView) v.findViewById(R.id.alarm_recycler_view);
         assert recyclerView != null;
@@ -123,6 +126,7 @@ public class StatusFragment extends Fragment {
             }
         });
     }
+
     private void createAlarm(){
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
