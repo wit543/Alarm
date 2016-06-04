@@ -148,10 +148,14 @@ public class SelectFriendActivity extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 Controler.getInstant().addAlarmToPending(hourOfDay,minute,context);
+                                Intent home = new Intent(SelectFriendActivity.this,HomeActivity.class);
+                                startActivity(home);
+
                             }
 
                         }, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE), true);
                         tpd.show();
+                        SelectFriendActivity.this.finish();
                     }
                 });
             }

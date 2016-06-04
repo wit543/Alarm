@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import xyz.wit543.wit.alarm.R;
 import xyz.wit543.wit.alarm.adapter.ViewPagerAdapter;
+import xyz.wit543.wit.alarm.fragment.AlarmAddedToFriendFragment;
 import xyz.wit543.wit.alarm.fragment.StatusFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -52,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(statusFragment,"Status");
         viewPagerAdapter.addFragment(new StatusFragment(),"pending");
-        viewPagerAdapter.addFragment(new StatusFragment(),"incoming");
+        viewPagerAdapter.addFragment(new AlarmAddedToFriendFragment(),"friend alarm");
         viewPager.setAdapter(viewPagerAdapter);
     }
 }

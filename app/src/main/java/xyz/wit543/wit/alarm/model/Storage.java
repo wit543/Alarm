@@ -106,4 +106,7 @@ public class Storage {
     public void setFirebaseUser(FirebaseUser firebaseUser) {
         this.firebaseUser = firebaseUser;
     }
+    public void removeStatus(Status status){
+        statuses.remove(status);
+    }
 }

@@ -4,26 +4,56 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import xyz.wit543.wit.alarm.R;
+import xyz.wit543.wit.alarm.adapter.AlarmAddedToFriendAdapter;
 import xyz.wit543.wit.alarm.model.Alarm;
 import xyz.wit543.wit.alarm.model.Status;
+import xyz.wit543.wit.alarm.model.Storage;
 
 
 public class AlarmAddedToFriendFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private List<Status> statuses;
-
+    private Storage storage;
+    private RecyclerView recyclerView;
+    private AlarmAddedToFriendAdapter alarmAddedToFriendAdapter;
+    private View v;
+    private LinearLayoutManager linearLayoutManager;
     public AlarmAddedToFriendFragment() {
+       init();
+    }
+    private void init(){
+        statuses = new ArrayList<>();
+        storage = Storage.getInstance();
+        alarmAddedToFriendAdapter = new AlarmAddedToFriendAdapter(statuses);
 
     }
+    private void reloadstatuses(){
+        statuses.clear();
+        Iterator<Status> ite = storage.getStatus();
+        while (ite.hasNext()){
+            statuses.add(ite.next());
+        }
+        alarmAddedToFriendAdapter.notifyDataSetChanged();
+    }
+    private void initRecyclerView(){
+        recyclerView = (RecyclerView) v.findViewById(R.id.alarm_added_to_friend_recycle_view);
+        linearLayoutManager = new LinearLayoutManager(v.getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(alarmAddedToFriendAdapter);
 
+    }
 
 
     @Override
@@ -38,7 +68,8 @@ public class AlarmAddedToFriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alarm_added_to_friend, container, false);
+        v=inflater.inflate(R.layout.fragment_alarm_added_to_friend, container, false);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -51,12 +82,13 @@ public class AlarmAddedToFriendFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initRecyclerView();
+        reloadstatuses();
     }
 
     @Override
