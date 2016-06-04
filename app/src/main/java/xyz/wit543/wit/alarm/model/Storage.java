@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.api.model.StringList;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Storage {
     private List<PendingIntent> pendingIntents;
     private List<User> friends;
     private static Storage storage;
+    private FirebaseUser firebaseUser;
     private Storage(){
         alarms = new ArrayList<>();
         pendingIntents = new ArrayList<>();
@@ -85,5 +87,13 @@ public class Storage {
             if(u.getUserName().equals(userName))
                 return u;
         return null;
+    }
+
+    public FirebaseUser getFirebaseUser() {
+        return firebaseUser;
+    }
+
+    public void setFirebaseUser(FirebaseUser firebaseUser) {
+        this.firebaseUser = firebaseUser;
     }
 }

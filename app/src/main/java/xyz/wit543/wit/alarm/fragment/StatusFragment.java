@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import xyz.wit543.wit.alarm.R;
+import xyz.wit543.wit.alarm.activity.LoginActivity;
 import xyz.wit543.wit.alarm.activity.SelectFriendActivity;
 import xyz.wit543.wit.alarm.activity.WakeActivity;
 import xyz.wit543.wit.alarm.adapter.AlarmRecycleViewAdapter;
@@ -96,8 +97,11 @@ public class StatusFragment extends Fragment {
         addAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddFriendDialog addFriendDialog = AddFriendDialog.newInstance();
-                addFriendDialog.show(getActivity().getSupportFragmentManager(),"hellp");
+//                AddFriendDialog addFriendDialog = AddFriendDialog.newInstance();
+//                addFriendDialog.show(getActivity().getSupportFragmentManager(),"hellp");
+
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
