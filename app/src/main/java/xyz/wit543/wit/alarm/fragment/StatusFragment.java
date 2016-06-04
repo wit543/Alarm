@@ -93,8 +93,8 @@ public class StatusFragment extends Fragment {
         loadPendingIntents();
     }
     private void initAddFriendButton(){
-        addAlarmButton = (FloatingActionButton) v.findViewById(R.id.friend_add);
-        addAlarmButton.setOnClickListener(new View.OnClickListener() {
+        addFriendButton = (FloatingActionButton) v.findViewById(R.id.friend_add);
+        addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                AddFriendDialog addFriendDialog = AddFriendDialog.newInstance();

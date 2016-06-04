@@ -8,12 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import xyz.wit543.wit.alarm.R;
+import xyz.wit543.wit.alarm.model.Alarm;
+import xyz.wit543.wit.alarm.model.Status;
 
 
 public class AlarmAddedToFriendFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private List<Status> statuses;
 
     public AlarmAddedToFriendFragment() {
 

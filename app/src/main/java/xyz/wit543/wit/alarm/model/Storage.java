@@ -18,12 +18,14 @@ public class Storage {
     private List<Alarm> alarms;
     private List<PendingIntent> pendingIntents;
     private List<User> friends;
+    private List<Status> statuses;
     private static Storage storage;
     private FirebaseUser firebaseUser;
     private Storage(){
         alarms = new ArrayList<>();
         pendingIntents = new ArrayList<>();
         friends = new ArrayList<>();
+        statuses = new ArrayList<>();
         initFriends();
     }
     public void  initFriends(){
@@ -92,7 +94,15 @@ public class Storage {
     public FirebaseUser getFirebaseUser() {
         return firebaseUser;
     }
-
+    public Iterator<Status> getStatus(){
+        return statuses.iterator();
+    }
+    public void addStatus(Status status){
+        statuses.add(status);
+    }
+    private void addStatus(Alarm alarm, User sender,User receiver){
+        statuses.add(new Status(alarm,sender,receiver));
+    }
     public void setFirebaseUser(FirebaseUser firebaseUser) {
         this.firebaseUser = firebaseUser;
     }
