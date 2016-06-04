@@ -68,7 +68,7 @@ public class SelectFriendFragment extends Fragment {
         friends = new ArrayList<User>();
         loadFriend();
         friendRecyclerView = (RecyclerView) getActivity().findViewById(R.id.friend_recycle_view);
-        selectFriendRecycleViewAdapter = new SelectFriendRecycleViewAdapter(friends);
+//        selectFriendRecycleViewAdapter = new SelectFriendRecycleViewAdapter(friends);
     }
 
     private void loadFriend(){

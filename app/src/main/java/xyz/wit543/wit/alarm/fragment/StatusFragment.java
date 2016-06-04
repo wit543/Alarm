@@ -127,19 +127,7 @@ public class StatusFragment extends Fragment {
         });
     }
 
-    private void createAlarm(){
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        Log.v("test","in");
-        TimePickerDialog tpd = new TimePickerDialog(getActivity(), R.style.red_dialog, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                addAlarmToPending(hourOfDay,minute);
-            }
 
-        }, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE), true);
-        tpd.show();
-    }
     private void initDeleteAlarmButton(){
         deleteAlarmButton = (FloatingActionButton) v.findViewById(R.id.alarm_delete);
         deleteAlarmButton.setOnClickListener(new View.OnClickListener() {
@@ -159,23 +147,7 @@ public class StatusFragment extends Fragment {
         storage.removeAllPendingIntent();
         recycleViewAdapter.notifyDataSetChanged();
     }
-    private void addAlarmToPending(int hour, int minute){
-        Alarm alarm = new Alarm(hour,minute);
-        alarms.add(alarm);
-        storage.addAlarm(alarm);
-        recycleViewAdapter.notifyDataSetChanged();
-        Intent intent = new Intent(getActivity(),WakeActivity.class);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.putExtra("alarm",alarm.hashCode());
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),((int)System.currentTimeMillis()),intent,0);
-
-        pendingIntents.add(pendingIntent);
-        storage.addPendingIntent(pendingIntent);
-
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP,alarm.getTime(),   pendingIntent);
-    }
     private void loadAlarms(){
         alarms.clear();
         Iterator<Alarm> alarmIterator = storage.getAlarms();

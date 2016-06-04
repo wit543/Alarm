@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "867685266870",
+    "firebase_url": "https://alarm-76686.firebaseio.com",
+    "project_id": "alarm-76686",
+    "storage_bucket": "alarm-76686.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867685266870:android:ad655d63ec0323a4",
+        "android_client_info": {
+          "package_name": "xyz.wit543.wit.alarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867685266870-q34s1f2vmdgbdapnrnju72lg7s92chau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCejExLtSaTRkBRzR-DOSd0UuzumcaD4ec"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
