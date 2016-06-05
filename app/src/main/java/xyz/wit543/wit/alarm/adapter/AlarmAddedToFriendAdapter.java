@@ -3,6 +3,7 @@ package xyz.wit543.wit.alarm.adapter;
 import android.graphics.Color;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,11 @@ public class AlarmAddedToFriendAdapter extends RecyclerView.Adapter<AlarmAddedTo
 
     @Override
     public void onBindViewHolder(AlarmAddedToFriendViewHolder holder, final int position) {
+        Log.v("AlarmAdded",holder.name+"");
+        Log.v("AlarmAdded",statuses+"");
+        Log.v("AlarmAdded",statuses.get(position)+"");
+        Log.v("AlarmAdded",statuses.get(position).getSender()+"");
+        Log.v("AlarmAdded",statuses.get(position).getSender().getUserName()+"");
         holder.name.setText(statuses.get(position).getSender().getUserName());
         holder.time.setText(statuses.get(position).getAlarm().getHour()+":"+statuses.get(position).getAlarm().getMinute());
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -55,7 +61,7 @@ public class AlarmAddedToFriendAdapter extends RecyclerView.Adapter<AlarmAddedTo
         public AlarmAddedToFriendViewHolder(View itemView) {
             super(itemView);
             friendImage = (ImageView)itemView.findViewById(R.id.friend_image);
-            name = (TextView) itemView.findViewById(R.id.name);
+            name = (TextView) itemView.findViewById(R.id.username);
             time = (TextView) itemView.findViewById(R.id.time);
 
         }

@@ -27,6 +27,7 @@ public class Storage {
         friends = new ArrayList<>();
         statuses = new ArrayList<>();
         initFriends();
+        initStatuses();
     }
     public void  initFriends(){
         friends.add(new User("1"));
@@ -34,6 +35,13 @@ public class Storage {
         friends.add(new User("3"));
         friends.add(new User("4"));
         friends.add(new User("5"));
+    }
+    public void initStatuses(){
+        statuses.add(new Status(new Alarm(10,10),friends.get(0),new User("A")));
+        statuses.add(new Status(new Alarm(10,10),friends.get(1),new User("A")));
+        statuses.add(new Status(new Alarm(10,10),friends.get(2),new User("A")));
+        statuses.add(new Status(new Alarm(10,10),friends.get(3),new User("A")));
+        statuses.add(new Status(new Alarm(10,10),friends.get(4),new User("A")));
     }
     public static Storage getInstance(){
         if(storage==null)
