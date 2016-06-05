@@ -97,11 +97,9 @@ public class StatusFragment extends Fragment {
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                AddFriendDialog addFriendDialog = AddFriendDialog.newInstance();
-//                addFriendDialog.show(getActivity().getSupportFragmentManager(),"hellp");
+                AddFriendDialog addFriendDialog = AddFriendDialog.newInstance();
+                addFriendDialog.show(getActivity().getSupportFragmentManager(),"hellp");
 
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
             }
         });
     }
